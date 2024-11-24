@@ -1,12 +1,8 @@
-
-
 const express = require('express');
 const sqlite3 = require('sqlite3');
-//const bodyParser = require('body-parser');
 const app = express();
 app.use(express.static('../front'));
 const PORT = 3001;
-
 app.use(express.json());
 
 const db = new sqlite3.Database('/home/liv/industrial-database/industrial-orders.db', (err) => {
@@ -16,7 +12,6 @@ const db = new sqlite3.Database('/home/liv/industrial-database/industrial-orders
   }
   console.log('Connected to the SQLite database');
 });
-
 
 app.post('/submit-order', (req, res) => {
   const cart = req.body;
@@ -39,7 +34,7 @@ app.post('/submit-order', (req, res) => {
 
     cart.forEach((item) => {
       const orderId = item.order_id;
-      const lineId = ++line_id; // Öka line_id och använd det som lineId
+      const lineId = ++line_id; 
       db.run(query, [lineId, orderId, item.articleNumber, item.quantity], (err) => {
         if (err) {
           console.error(err.message);
@@ -49,13 +44,9 @@ app.post('/submit-order', (req, res) => {
     });
 
     res.send('Order submitted successfully!');
- 
 
   });
 });
-
-
-
 
 app.get('/orders', (_req, res) => {
   db.all('SELECT * FROM orders', (err, rows) => {
@@ -64,11 +55,9 @@ app.get('/orders', (_req, res) => {
       res.status(500).json({ error: 'Failed to fetch orders' });
       return;
     }
-    res.json(rows);  // Return the result from the SQLite query
+    res.json(rows);  
   });
 });
-
-
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

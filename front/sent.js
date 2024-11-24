@@ -19,10 +19,7 @@ let priceTimesProduct = [];
 
 const orderConfirmationInfo = () => {
 
-
     const totalPriceElement=document.createElement('strong');
-
-
     receipt.forEach((item, index) => {
         const article = document.createElement('article');
         const productName = document.createElement('h2');

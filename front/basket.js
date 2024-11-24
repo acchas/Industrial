@@ -15,7 +15,6 @@ var priceTimesProduct = [];
 let cartArr = localStorage.getItem('cart');
 
 const showCartContent = () => {
-
     const form=document.createElement('form');
     const emptyCartBtn=document.createElement('button');
     const confirmBtn=document.createElement('button');
@@ -27,7 +26,6 @@ const showCartContent = () => {
     confirmBtn.type="submit";
     confirmBtn.id="confirm-order";
     confirmBtn.innerText="Confirm Order";
-
     cart.forEach((item, index) => {
         const article = document.createElement('article');
         const productName = document.createElement('h2');
@@ -46,8 +44,6 @@ const showCartContent = () => {
         totalPrice += priceTimesProduct[index];
  
     });
-
-    let totalPriceDec=totalPrice.toFixed(2);
     totalPriceElement.innerText="Total: $"+totalPrice.toFixed(2);
     form.append(confirmBtn);
     cartDiv.append(totalPriceElement, form,emptyCartBtn);
@@ -57,7 +53,6 @@ const showCartContent = () => {
 function initializeCartActions() {
 
     if(0===cart.length){
-   
         emptyCart.innerText="Cart is Empty";
         main.appendChild(emptyCart);
         return; 
@@ -87,7 +82,7 @@ function initializeCartActions() {
                     body: JSON.stringify(cart),
                 });
                 if (response.ok) {
-                    localStorage.setItem("receipt", JSON.stringify(cart))
+                    localStorage.setItem("receipt", JSON.stringify(cart));
                     localStorage.removeItem('cart');
              
                    
