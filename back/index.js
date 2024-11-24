@@ -19,9 +19,14 @@ const db = new sqlite3.Database('/home/liv/industrial-database/industrial-orders
     quantity INTEGER NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(product_id)
     )`;
-    db.run(creTable);
-});
 
+    db.run(creTable, (err) => {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send('Database error. Failed to create table orders');
+      }
+    });
+});
 
 app.post('/submit-order', (req, res) => {
   const cart = req.body;
