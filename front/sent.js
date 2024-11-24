@@ -15,7 +15,6 @@ orderDetails.innerText="Order Details:";
 returnToHomePage.innerText = "Continue Shopping";
 returnToHomePage.href = "index.html";
 let totalPrice = 0;
-let priceTimesProduct = [];
 
 const orderConfirmationInfo = () => {
 
@@ -32,8 +31,8 @@ const orderConfirmationInfo = () => {
         quantity.innerText = "Quantity: " + item.quantity;
         article.append(productName, articleNumber, price, quantity,);
         main.appendChild(article);
-        priceTimesProduct[index] = item.quantity * item.price;
-        totalPrice += priceTimesProduct[index];
+        totalPrice += item.quantity * item.price;
+
 
     });
     

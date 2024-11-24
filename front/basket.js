@@ -11,8 +11,6 @@ body.append(main);
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let receipt = JSON.parse(localStorage.getItem('receipt')) || [];
 var totalPrice = 0;
-var priceTimesProduct = [];
-let cartArr = localStorage.getItem('cart');
 
 const showCartContent = () => {
     const form=document.createElement('form');
@@ -40,8 +38,7 @@ const showCartContent = () => {
         article.append(productName, articleNumber, price, quantity);
         cartDiv.append(article)
         main.appendChild(cartDiv);
-        priceTimesProduct[index] = item.quantity * item.price;
-        totalPrice += priceTimesProduct[index];
+        totalPrice += item.quantity * item.price;
  
     });
     totalPriceElement.innerText="Total: $"+totalPrice.toFixed(2);
