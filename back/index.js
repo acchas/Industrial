@@ -20,10 +20,10 @@ const db = new sqlite3.Database('/home/liv/industrial-database/industrial-orders
     FOREIGN KEY (product_id) REFERENCES products(product_id)
     )`;
 
-    db.run(creTable, (err) => {
+    db.run(creTable, (err, res) => {
       if (err) {
-        console.error(err.message);
-        return res.status(500).send('Database error. Failed to create table orders');
+        console.error('Error creating table "orders":', err.message);
+        return;
       }
     });
 });
@@ -41,8 +41,8 @@ app.post('/submit-order', (req, res) => {
 
   db.get('SELECT MAX(line_id) AS maxLineId FROM orders', (err, row) => {
     if (err) {
-      console.error(err.message);
-      return res.status(500).send('Database error.');
+      console.error('Failed to fetch last line_id.', err.message);
+      return;
     }
 
     let line_id = row.maxLineId || 0;
@@ -52,8 +52,8 @@ app.post('/submit-order', (req, res) => {
       const lineId = ++line_id; 
       db.run(query, [lineId, orderId, item.articleNumber, item.quantity], (err) => {
         if (err) {
-          console.error(err.message);
-          return res.status(500).send('Database error.');
+          console.error('Failed to insert into database, failed to place order', err.message);
+          return;
         }
       });
     });
@@ -67,7 +67,6 @@ app.get('/orders', (_req, res) => {
   db.all('SELECT * FROM orders', (err, rows) => {
     if (err) {
       console.error('Error fetching orders from SQLite:', err.message);
-      res.status(500).json({ error: 'Failed to fetch orders' });
       return;
     }
     res.json(rows);  
