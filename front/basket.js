@@ -24,7 +24,7 @@ const showCartContent = () => {
     confirmBtn.type="submit";
     confirmBtn.id="confirm-order";
     confirmBtn.innerText="Confirm Order";
-    cart.forEach((item, index) => {
+    cart.forEach((item) => {
         const article = document.createElement('article');
         const productName = document.createElement('h2');
         const articleNumber = document.createElement('p');
