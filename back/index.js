@@ -11,7 +11,17 @@ const db = new sqlite3.Database('/home/liv/industrial-database/industrial-orders
     return;
   }
   console.log('Connected to the SQLite database');
+
+  const creTable=`CREATE TABLE IF NOT EXISTS orders(
+    line_id INTEGER PRIMARY KEY,
+    order_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+    )`;
+    db.run(creTable);
 });
+
 
 app.post('/submit-order', (req, res) => {
   const cart = req.body;
